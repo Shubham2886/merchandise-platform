@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:
+  mongo:
+    image: mongo:7
+    container_name: merch_mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  backend:
+    build: ./backend
+    container_name: merch_backend
+    restart: unless-stopped
+    depends_on:
+      - mongo
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - NODE_ENV=production
+      - CLIENT_URL=http://localhost:5173
+      - MONGO_URI=mongodb://mongo:27017/merch_platform
+      - JWT_ACCESS_SECRET=change_this_access_secret
+      - JWT_REFRESH_SECRET=change_this_refresh_secret
+      - JWT_ACCESS_EXPIRES=15m
+      - JWT_REFRESH_EXPIRES=7d
+      - PAYMENT_MODE=mock
+      - SHIPPING_MODE=mock
+      - UPLOAD_DIR=uploads
+      - MAX_FILE_SIZE_MB=5
+    volumes:
+      - backend_uploads:/app/uploads
+
+  frontend:
+    build: ./frontend
+    container_name: merch_frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "5173:80"
+
+volumes:
+  mongo_data:
+  backend_uploads:

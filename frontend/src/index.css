@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+:root {
+  --brand: #1e1b4b;
+  --brand-light: #4338ca;
+  --accent: #f59e0b;
+}
+
+body {
+  font-family: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  background-color: #f8fafc;
+  color: #1e293b;
+}
+
+.btn-primary {
+  @apply bg-indigo-900 hover:bg-indigo-800 text-white font-medium px-4 py-2 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+}
+.btn-secondary {
+  @apply bg-white hover:bg-slate-50 text-indigo-900 border border-indigo-900 font-medium px-4 py-2 rounded-md transition-colors;
+}
+.btn-danger {
+  @apply bg-red-600 hover:bg-red-700 text-white font-medium px-4 py-2 rounded-md transition-colors;
+}
+.input {
+  @apply w-full border border-slate-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500;
+}
+.card {
+  @apply bg-white rounded-lg shadow-sm border border-slate-200;
+}
+.badge {
+  @apply inline-block text-xs font-semibold px-2 py-1 rounded-full;
+}
